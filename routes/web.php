@@ -1,18 +1,9 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
+Route::post('/follow', [FollowController::class, 'follow']);
+Route::delete('/unfollow/{id}', [FollowController::class, 'unfollow']);
+Route::patch('/update-notification-preferences/{id}', [FollowController::class, 'updateNotificationPreferences']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
