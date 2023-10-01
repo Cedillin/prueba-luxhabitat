@@ -16,7 +16,8 @@ class DatabaseSeeder extends Seeder
             PropertyCategoriesTableSeeder::class,
             NeighborhoodsTableSeeder::class,
             BuildingTableSeeder::class,
-            PropertiesTableSeeder::class
+            PropertiesTableSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

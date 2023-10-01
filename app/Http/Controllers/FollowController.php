@@ -22,10 +22,10 @@ class FollowController extends Controller
         $user = auth()->user() ?? User::find(1);
 
         $follow = Follow::create([
-            'user_id' => $user->id,
+            'user_id' => 1,
             'followable_id' => $data['entity_id'],
-            'followable_type' => $data['entity_type'],
-            'notification_frequency' => $data['notification_frequency'],
+            'followable_type' => $data['entity_type'] ?? 'property',
+            'notification_frequency' => $data['notification_frequency'] ?? 'daily',
         ]);
 
         return response()->json(['message' => 'Followed successfully.', 'follow' => $follow], 201);
@@ -42,9 +42,17 @@ class FollowController extends Controller
     }
 
 
-    public function updateNotificationPreferences(Request $request)
+    public function updateNotificationPreferences($id, Request $request)
     {
-        // Validate and update notification preferences
-    }
+        $data = $request->validate([
+            'notification_frequency' => 'required|string|in:daily,weekly',
+        ]);
 
+        $user = auth()->user() ?? User::find(1);
+
+        $follow = Follow::where('user_id', $user->id)->where('id', $id)->firstOrFail();
+        $follow->update(['notification_frequency' => $data['notification_frequency']]);
+
+        return response()->json(['message' => 'Notification preferences updated successfully', 'follow' => $follow], 200);
+    }
 }
