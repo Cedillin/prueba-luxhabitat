@@ -17,18 +17,25 @@ class NotificationServiceProvider extends ServiceProvider
         $this->app->bind(NotificationService::class, function ($app) {
             $services = [];
 
-            $config = config('services.notification.services');
+            $config = config('services.notification.services', []);
 
-            if ($config['mandrill']['enabled']) {
-                $services[] = new MandrillService($config['mandrill']['api_key']);
+            foreach ($config as $serviceKey => $serviceConfig) {
+                if ($serviceConfig['enabled'] && !empty($serviceConfig['api_key'])) {
+                    $services[] = $this->createService($serviceKey, $serviceConfig['api_key']);
+                }
             }
-
-//            if ($config['whatsapp']['enabled']) {
-//                $services[] = new WhatsappService($config['whatsapp']['api_key']);
-//            }
 
             return new CompositeNotificationService($services);
         });
+    }
+
+    protected function createService($serviceKey, $apiKey): MandrillService
+    {
+        return match ($serviceKey) {
+            'mandrill' => new MandrillService($apiKey),
+            // 'whatsapp' => new WhatsappService($apiKey),
+            default => throw new \InvalidArgumentException("Invalid service key: $serviceKey"),
+        };
     }
 
     /**

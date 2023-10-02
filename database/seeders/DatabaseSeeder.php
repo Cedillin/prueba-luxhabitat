@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Follow;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,6 +19,9 @@ class DatabaseSeeder extends Seeder
             BuildingTableSeeder::class,
             PropertiesTableSeeder::class,
             UserSeeder::class,
+
         ]);
+
+        Follow::factory(20)->create();
     }
 }

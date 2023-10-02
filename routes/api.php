@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/follow', [FollowController::class, 'follow']);
 Route::delete('/unfollow/{id}', [FollowController::class, 'unfollow']);
 Route::patch('/update-notification-preferences/{id}', [FollowController::class, 'updateNotificationPreferences']);
+
+// Properties
+Route::apiResource('properties', PropertyController::class);
 
 

@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Services\Notifications\NotificationConditionService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -12,7 +13,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->job(new SendPropertyNotifications)->daily();
+        $schedule->call(function () {
+            app(NotificationConditionService::class)->checkAndSendNotifications();
+        })->hourly();
     }
 
     /**

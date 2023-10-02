@@ -33,13 +33,15 @@ return [
 
 
     'notification' => [
-        'mandrill' => [
-            'enabled' => env('MANDRILL_ENABLED', true),
-            'api_key' => env('MANDRILL_API_KEY'),
-        ],
-        'whatsapp' => [
-            'enabled' => env('WHATSAPP_ENABLED', false),
-            'api_key' => env('WHATSAPP_API_KEY'),
+        'services' => [
+            'mandrill' => [
+                'enabled' => env('MANDRILL_ENABLED', true),
+                'api_key' => env('MANDRILL_API_KEY'),
+            ],
+            'whatsapp' => [
+                'enabled' => env('WHATSAPP_ENABLED', false),
+                'api_key' => env('WHATSAPP_API_KEY'),
+            ]
         ],
     ],
 ];

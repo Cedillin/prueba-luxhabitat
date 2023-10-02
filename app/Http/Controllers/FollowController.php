@@ -22,7 +22,7 @@ class FollowController extends Controller
         $user = auth()->user() ?? User::find(1);
 
         $follow = Follow::create([
-            'user_id' => 1,
+            'user_id' => $user->id,
             'followable_id' => $data['entity_id'],
             'followable_type' => $data['entity_type'] ?? 'property',
             'notification_frequency' => $data['notification_frequency'] ?? 'daily',
@@ -40,7 +40,6 @@ class FollowController extends Controller
 
         return response()->json(['message' => 'Unfollowed successfully'], 200);
     }
-
 
     public function updateNotificationPreferences($id, Request $request)
     {

@@ -3,18 +3,12 @@
 namespace App\Services\Notifications;
 
 use App\Contracts\Notifications\NotificationService;
+use App\Notifications\PropertyNotification;
 
 class MandrillService implements NotificationService
 {
-    protected string $apiKey;
-
-    public function __construct($apiKey)
+    public function send($recipient, $message): void
     {
-        $this->apiKey = $apiKey;
-    }
-
-    public function send($recipient, $message)
-    {
-
+        $recipient->notify(new PropertyNotification($message));
     }
 }
